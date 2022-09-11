@@ -1,6 +1,11 @@
 # random_number_generator
 
-A new Flutter project.
+
+
+
+https://user-images.githubusercontent.com/40948291/189525669-25685ca0-81eb-4646-a118-318d258c9cd8.mp4
+
+
 
 ## Getting Started
 
