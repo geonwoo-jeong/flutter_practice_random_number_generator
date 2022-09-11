@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:random_number_generator/constants/colors.dart';
 
@@ -9,6 +11,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<int> randomNumbers = [123, 456, 789];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   IconButton(
                       onPressed: () {},
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.settings,
                         color: RED_COLOR,
                       ))
@@ -39,15 +43,44 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Expanded(
                   child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text('123'), Text('456'), Text('789')],
-              )),
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: randomNumbers
+                          .asMap()
+                          .entries
+                          .map((x) => Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: x.key == 2 ? 0 : 16.0),
+                                child: Row(
+                                  children: x.value
+                                      .toString()
+                                      .split('')
+                                      .map((y) => Image.asset(
+                                          'assets/images/$y.png',
+                                          height: 70.0,
+                                          width: 50.0))
+                                      .toList(),
+                                ),
+                              ))
+                          .toList())),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: RED_COLOR),
-                    onPressed: () {},
-                    child: Text('Generate')),
+                    onPressed: () {
+                      final rand = Random();
+                      final Set<int> newNumbers = {};
+
+                      while(newNumbers.length != 3) {
+                        final number = rand.nextInt(1000);
+
+                        newNumbers.add(number);
+                      }
+
+                      setState(() {
+                        randomNumbers = newNumbers.toList();
+                      });
+                    },
+                    child: const Text('Generate')),
               )
             ],
           ),
